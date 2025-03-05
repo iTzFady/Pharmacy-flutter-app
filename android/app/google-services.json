@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "466242668037",
+    "project_id": "stmary-pharmacy",
+    "storage_bucket": "stmary-pharmacy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466242668037:android:b6904645c512de7908be6c",
+        "android_client_info": {
+          "package_name": "com.stmary.pharmacy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTjIdHWsuaeHFOzM6ZPHjVXdSYIrZN0R4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
