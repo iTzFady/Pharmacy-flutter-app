@@ -84,134 +84,147 @@ class _SoldViewState extends State<SoldView> {
             children: [
               Column(
                 children: [
-                  ShowcsaeSidetext(label: 'Code', text: widget.code.toString()),
-                  ShowcaseText(
-                    width: double.infinity,
-                    height: 40,
-                    label: 'Name of the medicine',
-                    text: widget.medName,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ShowcaseText(
-                        label: 'Expiration Date',
-                        text: widget.expDate,
-                        width: 135,
-                      ),
-                      ShowcaseText(
-                        label: 'Date',
-                        text:
-                            DateFormat(
-                              'dd/MM/yyyy',
-                            ).format(DateTime.now()).toString(),
-                        width: 135,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 40,
-                    children: [
-                      ShowcaseText(
-                        label: 'Quantity',
-                        text: widget.quantity.toString(),
-                        width: 77,
-                      ),
-                      ShowcaseText(
-                        label: 'الخارج',
-                        text: widget.sold.toString(),
-                        width: 57,
-                      ),
-                    ],
-                  ),
-                  ShowcaseText(
-                    label: 'المتبقي',
-                    text: (widget.quantity - widget.sold).toString(),
-                    width: double.infinity,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(40.0),
-                    child: Divider(height: 5, color: Colors.black),
-                  ),
-
-                  //Counter(),
-                  Column(
-                    children: [
-                      Text(
-                        'اختار العدد المطلوب',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Cairo',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  counter++;
-                                });
-                              },
-                              icon: Icon(Icons.add),
-                            ),
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ShowcsaeSidetext(
+                            label: 'Code',
+                            text: widget.code.toString(),
+                          ),
+                          ShowcaseText(
+                            width: double.infinity,
+                            height: 40,
+                            label: 'Name of the medicine',
+                            text: widget.medName,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ShowcaseText(
+                                label: 'Expiration Date',
+                                text: widget.expDate,
+                                width: 135,
                               ),
-                              child: Center(
-                                child: Text(
-                                  counter.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              ShowcaseText(
+                                label: 'Date',
+                                text:
+                                    DateFormat(
+                                      'dd/MM/yyyy',
+                                    ).format(DateTime.now()).toString(),
+                                width: 135,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 40,
+                            children: [
+                              ShowcaseText(
+                                label: 'Quantity',
+                                text: widget.quantity.toString(),
+                                width: 77,
+                              ),
+                              ShowcaseText(
+                                label: 'الخارج',
+                                text: widget.sold.toString(),
+                                width: 57,
+                              ),
+                            ],
+                          ),
+                          ShowcaseText(
+                            label: 'المتبقي',
+                            text: (widget.quantity - widget.sold).toString(),
+                            width: double.infinity,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(40.0),
+                            child: Divider(height: 5, color: Colors.black),
+                          ),
+
+                          Column(
+                            children: [
+                              Text(
+                                'اختار العدد المطلوب',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Cairo',
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          counter++;
+                                        });
+                                      },
+                                      icon: Icon(Icons.add),
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          counter.toString(),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (counter > 1) {
+                                          setState(() {
+                                            counter--;
+                                          });
+                                        }
+                                      },
+                                      icon: Icon(Icons.remove),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(18),
+                            child: TextField(
+                              controller: _patientName,
+                              keyboardType: TextInputType.name,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+                                hintText: 'اسم المريض',
+                                floatingLabelAlignment:
+                                    FloatingLabelAlignment.center,
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.never,
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                if (counter > 1) {
-                                  setState(() {
-                                    counter--;
-                                  });
-                                }
-                              },
-                              icon: Icon(Icons.remove),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: TextField(
-                      controller: _patientName,
-                      keyboardType: TextInputType.name,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        hintText: 'اسم المريض',
-                        floatingLabelAlignment: FloatingLabelAlignment.center,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
+
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: SizedBox(

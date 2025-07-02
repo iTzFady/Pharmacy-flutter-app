@@ -54,13 +54,17 @@ class _AddNewMedicineViewState extends State<AddNewMedicineView> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(
-                context,
-              ).pushNamedAndRemoveUntil(homeRoute, (Route) => false);
-            },
-            icon: Icon(Icons.arrow_back),
+          leading: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.of(
+                    context,
+                  ).pushNamedAndRemoveUntil(homeRoute, (Route) => false);
+                },
+                icon: Icon(Icons.arrow_back),
+              ),
+            ],
           ),
         ),
         body: Container(
@@ -71,155 +75,160 @@ class _AddNewMedicineViewState extends State<AddNewMedicineView> {
             ),
           ),
           padding: EdgeInsets.all(10),
-          child: Stack(
-            fit: StackFit.expand,
+          child: Column(
             children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 30, 8, 8),
-                    child: Container(
-                      width: double.infinity,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.white,
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(3, 1, 5, 3),
-                              child: Icon(
-                                Icons.add_circle_rounded,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              'Add new medicine',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 8),
+                child: Container(
+                  width: double.infinity,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(3, 1, 5, 3),
+                          child: Icon(
+                            Icons.add_circle_rounded,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
+                        Text(
+                          'Add new medicine',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  LabeledTextfield(
-                    label: 'Code',
-                    hint: '101',
-                    controller: _code,
-                    inputType: TextInputType.number,
-                    onChanged: (val) {
-                      setState(() {
-                        _code.text = val.toString();
-                      });
-                    },
-                    baseColor: Colors.transparent,
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [FilteringTextInputFormatter.digitsOnly],
-                  ),
-
-                  LabeledTextfield(
-                    label: 'Name of the medicine',
-                    hint: 'Panadol Extra',
-                    controller: _nameOfMedicine,
-                    onChanged: (text) {
-                      _nameOfMedicine.text = text.toString();
-                    },
-                    baseColor: Colors.transparent,
-                    inputType: TextInputType.text,
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [],
-                  ),
-                  LabeledTextfield(
-                    label: 'API',
-                    hint: 'المادة الفعالة',
-                    controller: _api,
-                    onChanged: (text) {
-                      _api.text = text.toString();
-                    },
-                    baseColor: Colors.transparent,
-                    inputType: TextInputType.text,
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [],
-                  ),
-                  LabeledTextfield(
-                    label: 'Expiration Date',
-                    hint: '12/8/2028',
-                    controller: _expDate,
-                    onChanged: (text) {
-                      _expDate.text = text.toString();
-                    },
-                    baseColor: Colors.transparent,
-                    inputType: TextInputType.numberWithOptions(),
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [
-                      LengthLimitingTextInputFormatter(10),
-                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9\/]*$')),
-                      TextInputFormatter.withFunction((oldValue, newValue) {
-                        String text = newValue.text;
-                        if (newValue.text.length == 2 &&
-                            oldValue.text.length != 3) {
-                          text += '/';
-                        }
-                        if (newValue.text.length == 5 &&
-                            oldValue.text.length != 6) {
-                          text += '/';
-                        }
-                        return TextEditingValue(text: text);
-                      }),
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      LabeledTextfield(
+                        label: 'Code',
+                        hint: '101',
+                        controller: _code,
+                        inputType: TextInputType.number,
+                        onChanged: (val) {
+                          setState(() {
+                            _code.text = val.toString();
+                          });
+                        },
+                        baseColor: Colors.transparent,
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                      LabeledTextfield(
+                        label: 'Name of the medicine',
+                        hint: 'Panadol Extra',
+                        controller: _nameOfMedicine,
+                        onChanged: (text) {
+                          _nameOfMedicine.text = text.toString();
+                        },
+                        baseColor: Colors.transparent,
+                        inputType: TextInputType.text,
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [],
+                      ),
+                      LabeledTextfield(
+                        label: 'API',
+                        hint: 'المادة الفعالة',
+                        controller: _api,
+                        onChanged: (text) {
+                          _api.text = text.toString();
+                        },
+                        baseColor: Colors.transparent,
+                        inputType: TextInputType.text,
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [],
+                      ),
+                      LabeledTextfield(
+                        label: 'Expiration Date',
+                        hint: '12/8/2028',
+                        controller: _expDate,
+                        onChanged: (text) {
+                          _expDate.text = text.toString();
+                        },
+                        baseColor: Colors.transparent,
+                        inputType: TextInputType.numberWithOptions(),
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^[0-9\/]*$'),
+                          ),
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            String text = newValue.text;
+                            if (newValue.text.length == 2 &&
+                                oldValue.text.length != 3) {
+                              text += '/';
+                            }
+                            if (newValue.text.length == 5 &&
+                                oldValue.text.length != 6) {
+                              text += '/';
+                            }
+                            return TextEditingValue(text: text);
+                          }),
+                        ],
+                      ),
+                      LabeledTextfield(
+                        label: 'Date',
+                        hint: '5/2/2025',
+                        controller: _addDate,
+                        onChanged: (text) {
+                          _addDate.text = text.toString();
+                        },
+                        baseColor: Colors.transparent,
+                        inputType: TextInputType.numberWithOptions(),
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [
+                          LengthLimitingTextInputFormatter(10),
+                          FilteringTextInputFormatter.allow(
+                            RegExp(r'^[0-9\/]*$'),
+                          ),
+                          TextInputFormatter.withFunction((oldValue, newValue) {
+                            String text = newValue.text;
+                            if (newValue.text.length == 2 &&
+                                oldValue.text.length != 3) {
+                              text += '/';
+                            }
+                            if (newValue.text.length == 5 &&
+                                oldValue.text.length != 6) {
+                              text += '/';
+                            }
+                            return TextEditingValue(text: text);
+                          }),
+                        ],
+                      ),
+                      LabeledTextfield(
+                        label: 'Quantity',
+                        hint: '50',
+                        controller: _quantity,
+                        onChanged: (text) {
+                          setState(() {
+                            _quantity.text = text.toString();
+                          });
+                        },
+                        baseColor: Colors.transparent,
+                        inputType: TextInputType.number,
+                        labedDirection: Alignment.topLeft,
+                        inputFormatter: [],
+                      ),
                     ],
                   ),
-                  LabeledTextfield(
-                    label: 'Date',
-                    hint: '5/2/2025',
-                    controller: _addDate,
-                    onChanged: (text) {
-                      _addDate.text = text.toString();
-                    },
-                    baseColor: Colors.transparent,
-                    inputType: TextInputType.numberWithOptions(),
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [
-                      LengthLimitingTextInputFormatter(10),
-                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9\/]*$')),
-                      TextInputFormatter.withFunction((oldValue, newValue) {
-                        String text = newValue.text;
-                        if (newValue.text.length == 2 &&
-                            oldValue.text.length != 3) {
-                          text += '/';
-                        }
-                        if (newValue.text.length == 5 &&
-                            oldValue.text.length != 6) {
-                          text += '/';
-                        }
-                        return TextEditingValue(text: text);
-                      }),
-                    ],
-                  ),
-                  LabeledTextfield(
-                    label: 'Quantity',
-                    hint: '50',
-                    controller: _quantity,
-                    onChanged: (text) {
-                      setState(() {
-                        _quantity.text = text.toString();
-                      });
-                    },
-                    baseColor: Colors.transparent,
-                    inputType: TextInputType.number,
-                    labedDirection: Alignment.topLeft,
-                    inputFormatter: [],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10.0, 25, 10, 10),
-                    //child:),
-                  ),
-                ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -235,11 +244,11 @@ class _AddNewMedicineViewState extends State<AddNewMedicineView> {
                         ),
                       ),
                       onPressed: () {
-                        if (isDate(_expDate.text)) {
+                        if (!isDate(_expDate.text)) {
                           _expDate.clear();
                           showErrorDialog(context, 'Enter a valid date');
-                        } else if (isDate(_addDate.text)) {
-                          _expDate.clear();
+                        } else if (!isDate(_addDate.text)) {
+                          _addDate.clear();
                           showErrorDialog(context, 'Enter a valid date');
                         } else if (_code.text.isEmpty ||
                             _nameOfMedicine.text.isEmpty ||

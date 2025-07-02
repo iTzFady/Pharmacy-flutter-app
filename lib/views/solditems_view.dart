@@ -37,7 +37,7 @@ class _SolditemsViewState extends State<SolditemsView> {
               fit: BoxFit.fill,
             ),
           ),
-          padding: EdgeInsets.all(18),
+          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -64,52 +64,54 @@ class _SolditemsViewState extends State<SolditemsView> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: MediaQuery.sizeOf(context).height * 0.80,
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: _databaseServices.getSoldMedicine(),
-                      builder: (
-                        BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot,
-                      ) {
-                        if (snapshot.hasError) {
-                          return const Text('Something went wrong');
-                        }
+                  Expanded(
+                    child: SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: MediaQuery.sizeOf(context).height * 0.80,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _databaseServices.getSoldMedicine(),
+                        builder: (
+                          BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot,
+                        ) {
+                          if (snapshot.hasError) {
+                            return const Text('Something went wrong');
+                          }
 
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return LoadingAnimationWidget.fallingDot(
-                            color: Colors.white,
-                            size: 20,
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return LoadingAnimationWidget.fallingDot(
+                              color: Colors.white,
+                              size: 20,
+                            );
+                          }
+                          return ListView(
+                            children:
+                                snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                      Soldmedicine data =
+                                          document.data()! as Soldmedicine;
+                                      return ExpandableStockDetails(
+                                        expandedChild: ExpandedDetails(
+                                          code: data.code,
+                                          medicineName: data.productName,
+                                          date: data.date.toString(),
+                                          sold: data.sold,
+                                          api: data.api,
+                                          patientName: data.paitientName,
+                                        ),
+                                        collapsedChild: CollapsedDetails(
+                                          medicineName: data.productName,
+                                          date: data.date,
+                                        ),
+                                        onTap: () {},
+                                      );
+                                    })
+                                    .toList()
+                                    .cast(),
                           );
-                        }
-                        return ListView(
-                          children:
-                              snapshot.data!.docs
-                                  .map((DocumentSnapshot document) {
-                                    Soldmedicine data =
-                                        document.data()! as Soldmedicine;
-                                    return ExpandableStockDetails(
-                                      expandedChild: ExpandedDetails(
-                                        code: data.code,
-                                        medicineName: data.productName,
-                                        date: data.date.toString(),
-                                        sold: data.sold,
-                                        api: data.api,
-                                        patientName: data.paitientName,
-                                      ),
-                                      collapsedChild: CollapsedDetails(
-                                        medicineName: data.productName,
-                                        date: data.date,
-                                      ),
-                                      onTap: () {},
-                                    );
-                                  })
-                                  .toList()
-                                  .cast(),
-                        );
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ],

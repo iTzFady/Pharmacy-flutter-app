@@ -62,7 +62,7 @@ class _RequestedmedicineViewState extends State<RequestedmedicineView> {
               Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 30, 8, 8),
+                    padding: const EdgeInsets.fromLTRB(8.0, 0, 8, 8),
                     child: Container(
                       width: double.infinity,
                       height: 30,

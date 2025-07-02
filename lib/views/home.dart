@@ -51,7 +51,7 @@ class _HomePageViewState extends State<HomePageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(191, 234, 255, 1.0),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -59,224 +59,242 @@ class _HomePageViewState extends State<HomePageView> {
             fit: BoxFit.fill,
           ),
         ),
-        padding: EdgeInsets.all(18),
+        padding: EdgeInsets.all(0),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                  child: Text(
-                    'Hi, User',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
-                  child: TextField(
-                    controller: _searchController,
-                    autocorrect: false,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      labelText: 'Search',
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => SearchView(
-                                    searchItem: _searchController.text,
-                                  ),
-                            ),
-                          );
-                        },
-                        icon: Icon(Icons.search),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      IconTextButton(
-                        title: 'العلاج المطلوب',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => const RequestedmedicineView(),
-                            ),
-                          );
-                        },
-                        width: 50,
-                        height: 50,
-                      ),
-                      IconTextButton(
-                        title: 'الخارج',
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const SolditemsView(),
-                            ),
-                          );
-                        },
-                        width: 50,
-                        height: 50,
-                      ),
-                      IconTextButton(
-                        title: 'روشتات المرضي',
-                        onPressed: () {},
-                        width: 50,
-                        height: 50,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 28, 0, 0),
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Stock',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w200,
-                          ),
+            SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: Text(
+                        'Hi, User',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 1, 0, 0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
+                      child: TextField(
+                        controller: _searchController,
+                        autocorrect: false,
+                        keyboardType: TextInputType.name,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: 'Search',
+                          suffixIcon: IconButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (context) => const AddNewMedicineView(),
+                                      (context) => SearchView(
+                                        searchItem: _searchController.text,
+                                      ),
                                 ),
                               );
                             },
-                            label: Text(
-                              'Add new medicine',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                              ),
-                            ),
-                            icon: Icon(
-                              Icons.add_circle_rounded,
-                              color: Colors.black,
-                            ),
+                            icon: Icon(Icons.search),
+                          ),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: MediaQuery.sizeOf(context).height * 0.50,
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: _databaseServices.getAvaliableMedicine(),
-                          builder: (
-                            BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot,
-                          ) {
-                            if (snapshot.hasError) {
-                              return Center(
-                                child: const Text('Something went wrong'),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconTextButton(
+                            title: 'العلاج المطلوب',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          const RequestedmedicineView(),
+                                ),
                               );
-                            }
-
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return LoadingAnimationWidget.fallingDot(
-                                color: Colors.white,
-                                size: 20,
+                            },
+                            width: 50,
+                            height: 50,
+                          ),
+                          IconTextButton(
+                            title: 'الخارج',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SolditemsView(),
+                                ),
                               );
-                            }
-                            return ListView(
-                              children:
-                                  snapshot.data!.docs
-                                      .map((DocumentSnapshot document) {
-                                        Medicine data =
-                                            document.data()! as Medicine;
-                                        if ((data.quantity - data.sold) <= 0) {
-                                          _databaseServices.deleteMedicine(
-                                            document.id,
-                                          );
-                                        }
-                                        return ExpandableStockDetails(
-                                          expandedChild: StockDetailsExpanded(
-                                            code: data.code,
-                                            medicineName: data.name,
-                                            expDate: data.expDate.toString(),
-                                            quantity: data.quantity,
-                                            api: data.api,
-                                          ),
-                                          collapsedChild: StockDetailsCollapsed(
-                                            medicineName: data.name,
-                                            expDate: data.expDate,
-                                          ),
-                                          onTap:
-                                              () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (context) => SoldView(
-                                                        code: data.code,
-                                                        medName: data.name,
-                                                        expDate: data.expDate,
-                                                        purchaseDate:
-                                                            DateFormat(
-                                                                  'dd-MM-yyyy',
-                                                                )
-                                                                .format(
-                                                                  DateTime.now(),
-                                                                )
-                                                                .toString(),
-                                                        quantity: data.quantity,
-                                                        sold: data.sold,
-                                                        api: data.api,
-                                                        medicine: data,
-                                                        id: document.id,
-                                                      ),
-                                                ),
-                                              ),
-                                        );
-                                      })
-                                      .toList()
-                                      .cast(),
-                            );
-                          },
-                        ),
+                            },
+                            width: 50,
+                            height: 50,
+                          ),
+                          IconTextButton(
+                            title: 'روشتات المرضي',
+                            onPressed: () {},
+                            width: 50,
+                            height: 50,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(12.0, 12, 0, 0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Stock',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w200,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 1, 10, 0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => const AddNewMedicineView(),
+                                  ),
+                                );
+                              },
+                              label: Text(
+                                'Add new medicine',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.add_circle_rounded,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                          child: SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            height: MediaQuery.sizeOf(context).height * 0.50,
+                            child: StreamBuilder<QuerySnapshot>(
+                              stream: _databaseServices.getAvaliableMedicine(),
+                              builder: (
+                                BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot,
+                              ) {
+                                if (snapshot.hasError) {
+                                  return Center(
+                                    child: const Text('Something went wrong'),
+                                  );
+                                }
+
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return LoadingAnimationWidget.fallingDot(
+                                    color: Colors.white,
+                                    size: 20,
+                                  );
+                                }
+                                return ListView(
+                                  children:
+                                      snapshot.data!.docs
+                                          .map((DocumentSnapshot document) {
+                                            Medicine data =
+                                                document.data()! as Medicine;
+                                            if ((data.quantity - data.sold) <=
+                                                0) {
+                                              _databaseServices.deleteMedicine(
+                                                document.id,
+                                              );
+                                            }
+                                            return ExpandableStockDetails(
+                                              expandedChild:
+                                                  StockDetailsExpanded(
+                                                    code: data.code,
+                                                    medicineName: data.name,
+                                                    expDate:
+                                                        data.expDate.toString(),
+                                                    quantity: data.quantity,
+                                                    api: data.api,
+                                                  ),
+                                              collapsedChild:
+                                                  StockDetailsCollapsed(
+                                                    medicineName: data.name,
+                                                    expDate: data.expDate,
+                                                  ),
+                                              onTap:
+                                                  () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (context) => SoldView(
+                                                            code: data.code,
+                                                            medName: data.name,
+                                                            expDate:
+                                                                data.expDate,
+                                                            purchaseDate:
+                                                                DateFormat(
+                                                                      'dd-MM-yyyy',
+                                                                    )
+                                                                    .format(
+                                                                      DateTime.now(),
+                                                                    )
+                                                                    .toString(),
+                                                            quantity:
+                                                                data.quantity,
+                                                            sold: data.sold,
+                                                            api: data.api,
+                                                            medicine: data,
+                                                            id: document.id,
+                                                          ),
+                                                    ),
+                                                  ),
+                                            );
+                                          })
+                                          .toList()
+                                          .cast(),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
